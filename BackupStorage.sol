@@ -71,7 +71,7 @@ contract BackupStorage is Owned {
     /// @param _destroy kill the contract
     function erase(uint _index, bool _destroy) public onlyOwner {
         if (_destroy) kill();               // kill contract
-        else delete entries[_index];            // delete an entry
+        else delete entries[_index];        // delete an entry
     }
     
     function() public payable {
