@@ -65,7 +65,7 @@ contract BackupStorage is Owned {
         if (bytes(_protocol).length > 0) entry.protocol = _protocol;
     }
     
-    /// @dev erase - delete an entry, or destroy the entire
+    /// @dev erase - delete an entry, or destroy the entire contract
     /// @param _index index of entry
     /// @param _destroy kill the contract
     function erase(uint _index, bool _destroy) public onlyOwner {
