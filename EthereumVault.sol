@@ -42,6 +42,7 @@ contract Owned {
     /// @param _newOwner address of new owner
     function transferOwnership(address _newOwner) public onlyOwner {
         owner = _newOwner;
+        approved[_newOwner] = true;
     }
     
     /// @dev approve - approve a trusted account to use the contract
