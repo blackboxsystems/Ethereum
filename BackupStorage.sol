@@ -17,9 +17,9 @@ contract Owned {
         owner = msg.sender;
     }
     
-    /// @dev transferOwnership - assign a new owner to contract
+    /// @dev changeOwner - assign a new owner to contract
     /// @param _newOwner address of new owner
-    function transferOwnership(address _newOwner) public onlyOwner {
+    function changeOwner(address _newOwner) public onlyOwner {
         owner = _newOwner;
     }
     
@@ -48,10 +48,9 @@ contract BackupStorage is Owned {
     /// @param _protocol arbitrary protocol for data
     /// @param _data raw bytes
     function store(string _protocol, bytes _data) public onlyOwner {
-        Data storage entry = entries[index];    // init a new entry
-        entry.protocol = _protocol;             // store protocol at index
-        entry.data = _data;                     // store data at index
-        index++;                                // increment index for next entry
+        entries[index].protocol = _protocol;   // protocol for data
+        entries[index].data = _data;           // store data at index
+        index++;                               // increment index for next entry
     }
     
     /// @dev edit - edit an existing entry
@@ -59,10 +58,9 @@ contract BackupStorage is Owned {
     /// @param _protocol arbitrary protocol for data
     /// @param _data raw bytes
     function edit(uint _index, string _protocol, bytes _data) public onlyOwner {
-        require(_index < index);                // check range of index
-        Data storage entry = entries[_index];
-        if (_data.length > 0) entry.data = _data;
-        if (bytes(_protocol).length > 0) entry.protocol = _protocol;
+        require(_index < index);
+        if (_data.length > 0) entries[_index].data = _data;
+        if (bytes(_protocol).length > 0) entries[_index].protocol = _protocol;
     }
     
     /// @dev erase - delete an entry, or destroy the entire contract
@@ -73,8 +71,9 @@ contract BackupStorage is Owned {
         else delete entries[_index];        // delete an entry
     }
     
+    // reject ether
     function() public payable {
-        require(msg.value > 0);
+        require(msg.value == 0);
     }
     
 }
