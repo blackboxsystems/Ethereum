@@ -28,13 +28,11 @@ contract Owned {
         if (locked) {
             require(digest(secret) == key && !used[newKey]);
             key = newKey;
-	        _;
             // track used keys
             if (newKey != 0) used[newKey] = true;
-	        else locked = false;
-        } else {
-            _;
-	    }
+	    else locked = false;
+        }
+        _;
     }
     
     // only when unlocked modifier
@@ -104,7 +102,7 @@ contract Owned {
     /// @param _seed secret for current key to unlock
     function unlock(
         string _seed
-    ) public onlyOwner authorize(_seed, 0) returns(bool) {
+    ) public onlyOwner onlyWhenLocked authorize(_seed, 0) returns(bool) {
         return true;
     }
     
