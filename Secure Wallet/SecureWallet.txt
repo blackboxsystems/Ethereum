@@ -127,8 +127,7 @@ contract SecureWallet is Owned {
     uint public sweepGasLimit = 25000; // gas limit to prevent out of gas exceptions
     uint index;                        // registered token index
     
-    // mappings of registered tokens with reverse lookup
-    mapping(address => uint) token_ids;
+    // mappings of registered tokens
     mapping(uint => address) public tokens;
     
     // events
@@ -165,7 +164,6 @@ contract SecureWallet is Owned {
     /// @param _token address of token contract
     function registerToken(address _token) public onlyOwner {
         tokens[index] = _token;
-        token_ids[_token] = index;
         emit RegisterToken(index, _token);
         index++;
     }
