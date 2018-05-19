@@ -127,8 +127,8 @@ contract SecureWallet is Owned {
     uint public sweepGasLimit = 25000; // gas limit to prevent out of gas exceptions
     uint index;                        // registered token index
     
-    // mappings of registered tokens
-    mapping(uint => address) public tokens;
+    // registered tokens
+    mapping(uint => address) tokens;
     
     // events
     event RegisterToken(uint id, address _token);
@@ -147,9 +147,9 @@ contract SecureWallet is Owned {
     /// @param _tokenId index of registered token
     function tokenBalance(
         uint _tokenId
-    ) public view returns(uint) {
+    ) public view returns(address tokenAddress, uint balance) {
         ERC20Token token = ERC20Token(tokens[_tokenId]);
-        return token.balanceOf(this);
+        return (tokens[_tokenId], token.balanceOf(this));
     }
     
     // MARK public functions
@@ -234,7 +234,7 @@ contract SecureWallet is Owned {
         if (_to == 0) _to = owner;
         uint balance = address(this).balance;
         // check value to send
-        if (balance < _value || _value == 0) _value = balance;
+        if (_value > balance || _value == 0) _value = balance;
         require(_value > 0);
         require(_to.send(_value));
     }
