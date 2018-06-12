@@ -83,6 +83,7 @@ contract Owned {
         bytes32 _key
     ) public onlyOwner onlyWhenUnlocked {
         require(_key != 0 && !used[_key]);
+	used[_key] = true;
         locked = true;
         key = _key;
     }
