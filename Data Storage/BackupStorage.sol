@@ -64,7 +64,6 @@ contract BackupStorage is Owned {
     
     /// @dev erase - delete an entry, or destroy the entire contract
     /// @param _index index of entry
-    /// @param _destroy kill the contract
     function erase(uint _index) public onlyOwner {
         require(_index < index);
         delete entries[_index];        // delete an entry
