@@ -24,14 +24,13 @@ contract Owned {
     }
     
     /// @dev kill - destroys the contract
-    function kill() internal {
+    function kill() public onlyOwner {
         selfdestruct(owner);
     }
 }
 
 // data storage contract
 contract BackupStorage is Owned {
-    
     // index of data entry
     uint index;
 
@@ -66,9 +65,9 @@ contract BackupStorage is Owned {
     /// @dev erase - delete an entry, or destroy the entire contract
     /// @param _index index of entry
     /// @param _destroy kill the contract
-    function erase(uint _index, bool _destroy) public onlyOwner {
-        if (_destroy) kill();               // kill contract
-        else delete entries[_index];        // delete an entry
+    function erase(uint _index) public onlyOwner {
+        require(_index < index);
+        delete entries[_index];        // delete an entry
     }
     
     // reject ether
