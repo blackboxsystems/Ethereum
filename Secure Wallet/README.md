@@ -18,3 +18,5 @@
     used to break account security on a blockchain that uses such algorithms.  Blockchains secure enormous amounts of value
     and provides an incentive to break underlying security of blockchain protocols.  Furthermore, if accounts can be
     compromised and controlled, decentralization becomes irrelavent because trust is broken at the most fundamental level.
+    
+    We also need the ability for wallet contracts to pay for gas so that a signed transaction can signal an embedded fee to miners.  This way private keys dont need to have any associated funds stored on the blockchain to pay for fees to execute signed transactions.
